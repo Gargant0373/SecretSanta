@@ -1,4 +1,3 @@
-![SecretSanta](https://pngimg.com/d/santa_claus_PNG38508.png)
 ## Secret Santa
 ### About
 The project can be found at santa.gargant.dev. I made it for our group of friends so that we would have a random way of assigning secret Santas. You start by adding all email addresses on the website and then clicking Send Emails. Each email address gets another email that they have to gift something to. 
