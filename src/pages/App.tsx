@@ -5,6 +5,7 @@ import ChristmasTheme from "../Theme";
 import EmailList from "../components/EmailList";
 import EmailReader from "../components/EmailReader";
 import Info from '../components/Info';
+import Footer from '../components/Footer';
 
 const PUBLIC_KEY = ""; // YOUR PUBLIC KEY HERE
 const SERVICE_ID = ""; // YOUR SERVICE ID HERE
@@ -80,6 +81,9 @@ function App() {
                 <Grid item xs={8} md={4}>
                     <Info />
                 </Grid>
+            </Grid>
+            <Grid bottom="0" position="sticky" width="100%">
+                <Footer />
             </Grid>
         </ThemeProvider>
     );
