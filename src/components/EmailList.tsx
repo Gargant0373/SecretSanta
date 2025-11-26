@@ -1,29 +1,47 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton, List, ListItem, ListItemText, Paper } from "@mui/material";
+import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Participant } from "../types";
 
-function EmailList(props: { emails: string[], setEmails: (emails: string[]) => void }) {
-    const handleRemoveEmail = (indexToRemove: number) => {
-        const updatedEmails = props.emails.filter((_, index) => index !== indexToRemove);
-        props.setEmails(updatedEmails);
+function EmailList(props: { participants: Participant[], setParticipants: (participants: Participant[]) => void }) {
+    const handleRemoveParticipant = (indexToRemove: number) => {
+        const updatedParticipants = props.participants.filter((_, index) => index !== indexToRemove);
+        props.setParticipants(updatedParticipants);
     };
 
     return (
-        <Paper style={{ maxHeight: '250px', overflowY: 'auto', width: '300px' }}>
-            <List>
-                {props.emails.map((email, index) => (
-                    <ListItem key={index}>
-                        <ListItemText primary={email} />
-                        <IconButton
-                            edge="end"
-                            aria-label="remove"
-                            onClick={() => handleRemoveEmail(index)}
-                        >
+        <List sx={{ width: '100%', bgcolor: 'background.paper', overflowY: 'auto', maxHeight: 300 }}>
+            {props.participants.map((participant, index) => (
+                <ListItem
+                    key={index}
+                    secondaryAction={
+                        <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveParticipant(index)} color="error">
                             <CloseIcon />
                         </IconButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Paper>
+                    }
+                    sx={{ 
+                        mb: 1, 
+                        borderRadius: 2, 
+                        bgcolor: 'grey.50',
+                        '&:hover': { bgcolor: 'grey.100' }
+                    }}
+                >
+                    <ListItemAvatar>
+                        <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                            {participant.name.charAt(0).toUpperCase()}
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText 
+                        primary={<Typography variant="subtitle1" fontWeight="bold">{participant.name}</Typography>}
+                        secondary={participant.email} 
+                    />
+                </ListItem>
+            ))}
+            {props.participants.length === 0 && (
+                <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ py: 4 }}>
+                    No participants yet. Add some elves! 🧝
+                </Typography>
+            )}
+        </List>
     );
 }
 

@@ -6,7 +6,7 @@ const Footer = () => {
       <Typography variant="body2" color="text.secondary" align="center">
         {'© '}
         <Link color="inherit" href="https://github.com/Gargant0373/SecretSanta">
-          SecretSanta
+          Gargant
         </Link>{' '}
         {new Date().getFullYear()}
       </Typography>

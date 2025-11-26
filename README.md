@@ -1,6 +1,6 @@
 ## Secret Santa
 ### About
-The project can be found at santa.gargant.dev. I made it for our group of friends so that we would have a random way of assigning secret Santas. You start by adding all email addresses on the website and then clicking Send Emails. Each email address gets another email that they have to gift something to. 
+The project can be found at santa.gargant.dev (not anymore, I don't want you to consume my free credits). I made it for our group of friends so that we would have a random way of assigning secret Santas. You start by adding all email addresses on the website and then clicking Send Emails. Each email address gets another email that they have to gift something to. 
 
 ### Stack
 SecretSanta is fully frontend; email sending is done with EmailJS. Since no server exists, I do not keep track of any data that users might input. 
