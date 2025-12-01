@@ -39,24 +39,53 @@ function EmailReader(props: { setParticipants: (participants: Participant[]) => 
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                try {
-                    const content = e.target?.result as string;
-                    const parsedData = JSON.parse(content);
-                    if (Array.isArray(parsedData) && parsedData.every(item => 
-                        typeof item === 'object' && 
-                        item !== null && 
-                        typeof item.name === 'string' && 
-                        typeof item.email === 'string' && 
-                        isValidEmail(item.email)
-                    )) {
-                        // Filter out duplicates that are already in the list
-                        const newParticipants = parsedData.filter((p: Participant) => !props.participants.some(existing => existing.email === p.email));
-                        props.setParticipants([...props.participants, ...newParticipants]);
-                    } else {
-                        alert("Invalid JSON format. Expected an array of objects with 'name' and 'email' properties.");
+                const content = e.target?.result as string;
+                if (file.name.toLowerCase().endsWith('.json')) {
+                    try {
+                        const parsedData = JSON.parse(content);
+                        if (Array.isArray(parsedData) && parsedData.every(item => 
+                            typeof item === 'object' && 
+                            item !== null && 
+                            typeof item.name === 'string' && 
+                            typeof item.email === 'string' && 
+                            isValidEmail(item.email)
+                        )) {
+                            // Filter out duplicates that are already in the list
+                            const newParticipants = parsedData.filter((p: Participant) => !props.participants.some(existing => existing.email === p.email));
+                            props.setParticipants([...props.participants, ...newParticipants]);
+                        } else {
+                            alert("Invalid JSON format. Expected an array of objects with 'name' and 'email' properties.");
+                        }
+                    } catch (error) {
+                        alert("Error parsing JSON file.");
                     }
-                } catch (error) {
-                    alert("Error parsing JSON file.");
+                } else if (file.name.toLowerCase().endsWith('.csv')) {
+                    try {
+                        const lines = content.split(/\r?\n/);
+                        const newParticipants: Participant[] = [];
+                        for (const line of lines) {
+                            // Simple CSV split, assumes no commas in name
+                            const parts = line.split(',');
+                            if (parts.length >= 2) {
+                                const name = parts[0].trim();
+                                const email = parts[1].trim();
+                                if (name && email && isValidEmail(email)) {
+                                    if (!props.participants.some(p => p.email === email) && !newParticipants.some(p => p.email === email)) {
+                                        newParticipants.push({ name, email });
+                                    }
+                                }
+                            }
+                        }
+                        if (newParticipants.length > 0) {
+                            props.setParticipants([...props.participants, ...newParticipants]);
+                        } else {
+                            alert("No valid participants found in CSV. Format should be: name,email");
+                        }
+                    } catch (error) {
+                        alert("Error parsing CSV file.");
+                    }
+                } else {
+                    alert("Unsupported file type. Please upload a .json or .csv file.");
                 }
             };
             reader.readAsText(file);
@@ -117,11 +146,11 @@ function EmailReader(props: { setParticipants: (participants: Participant[]) => 
                     startIcon={<UploadFileIcon />}
                     sx={{ whiteSpace: 'nowrap' }}
                 >
-                    Load JSON
+                    Load File
                     <input
                         type="file"
                         hidden
-                        accept=".json"
+                        accept=".json,.csv"
                         onChange={handleFileUpload}
                     />
                 </Button>

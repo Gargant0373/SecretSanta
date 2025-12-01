@@ -24,26 +24,32 @@ function Info() {
             <Accordion sx={{ borderRadius: '12px !important', '&:before': { display: 'none' }, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel-content-json"
-                    id="panel-header-json"
+                    aria-controls="panel-content-file"
+                    id="panel-header-file"
                 >
-                    <Typography variant="h6" color="primary" fontWeight="bold">JSON Import Format</Typography>
+                    <Typography variant="h6" color="primary" fontWeight="bold">File Import Formats</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="body1" textAlign="justify" color="text.secondary" paragraph>
-                        You can upload a list of participants using a .json file. The file should contain an array of objects with "name" and "email" properties:
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>JSON</Typography>
+                    <Typography variant="body2" color="text.secondary" paragraph>
+                        Array of objects with "name" and "email" properties:
                     </Typography>
-                    <Box component="pre" sx={{ bgcolor: 'grey.100', p: 2, borderRadius: 2, overflowX: 'auto', fontSize: '0.85rem', color: 'text.primary' }}>
+                    <Box component="pre" sx={{ bgcolor: 'grey.100', p: 2, borderRadius: 2, overflowX: 'auto', fontSize: '0.85rem', color: 'text.primary', mb: 2 }}>
 {`[
   {
     "name": "Santa Claus",
     "email": "santa@northpole.com"
-  },
-  {
-    "name": "Rudolph",
-    "email": "rudolph@northpole.com"
   }
 ]`}
+                    </Box>
+
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>CSV</Typography>
+                    <Typography variant="body2" color="text.secondary" paragraph>
+                        Comma-separated values with name first, then email:
+                    </Typography>
+                    <Box component="pre" sx={{ bgcolor: 'grey.100', p: 2, borderRadius: 2, overflowX: 'auto', fontSize: '0.85rem', color: 'text.primary' }}>
+{`Santa Claus,santa@northpole.com
+Rudolph,rudolph@northpole.com`}
                     </Box>
                 </AccordionDetails>
             </Accordion>
